@@ -152,11 +152,21 @@ export default function App() {
     >
       
       {/* Background Elements */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-purple-900/20 via-black to-black z-0"></div>
+      <div className="absolute inset-0 z-0" style={{
+        background: 'radial-gradient(ellipse 100% 70% at 50% 0%, rgba(88,28,135,0.4) 0%, rgba(30,10,60,0.3) 40%, #050505 75%)'
+      }}></div>
       <FloorGrid />
 
-      {/* Ambient Lighting */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-32 bg-pink-600/10 blur-[100px] z-0 pointer-events-none"></div>
+      {/* Top ambient light — wide pink bloom */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-5xl h-48 z-0 pointer-events-none" style={{
+        background: 'radial-gradient(ellipse at 50% 0%, rgba(236,72,153,0.18) 0%, transparent 70%)',
+        filter: 'blur(30px)',
+      }}></div>
+
+      {/* Subtle center spotlight on the cabinets */}
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[400px] z-0 pointer-events-none" style={{
+        background: 'radial-gradient(ellipse at 50% 50%, rgba(120,50,200,0.12) 0%, transparent 70%)',
+      }}></div>
 
       {/* Top Banner - Visible only when expanded */}
       <div 
@@ -175,11 +185,42 @@ export default function App() {
       </div>
 
       {/* Header Sign */}
-      <div className={`z-10 text-center animate-flicker relative group cursor-default mt-2 md:mt-0 md:mb-12 shrink-0 transition-opacity duration-500 ${isExpanded ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
-        <h1 className="font-arcade text-3xl md:text-6xl text-transparent bg-clip-text bg-gradient-to-b from-pink-400 to-purple-600 drop-shadow-[0_0_15px_rgba(236,72,153,0.8)]">
-          ARCADE ZONE
-        </h1>
-        <div className="absolute -inset-2 bg-pink-500/20 blur-xl opacity-50 group-hover:opacity-100 transition-opacity duration-500"></div>
+      <div className={`z-10 text-center cursor-default mt-2 md:mt-0 md:mb-12 shrink-0 transition-opacity duration-500 ${isExpanded ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
+        {/* Outer glow bloom */}
+        <div className="absolute left-1/2 -translate-x-1/2 w-[500px] h-24 bg-pink-600/15 blur-[60px] pointer-events-none -mt-4"></div>
+
+        {/* Neon sign frame */}
+        <div className="relative inline-block px-5 md:px-8 py-3 md:py-4 border-2 border-pink-500/70 animate-sign-glow"
+          style={{ borderRadius: '3px' }}>
+
+          {/* Corner brackets */}
+          <span className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-pink-300 -translate-x-[1px] -translate-y-[1px]"></span>
+          <span className="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-pink-300 translate-x-[1px] -translate-y-[1px]"></span>
+          <span className="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-pink-300 -translate-x-[1px] translate-y-[1px]"></span>
+          <span className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-pink-300 translate-x-[1px] translate-y-[1px]"></span>
+
+          {/* Top decoration row */}
+          <div className="flex items-center justify-center gap-2 md:gap-3 mb-1">
+            <span className="font-pixel text-pink-400/70 text-sm md:text-base tracking-widest">◆◆◆</span>
+            <span className="font-pixel text-pink-300/50 text-xs hidden md:inline tracking-[0.5em]">✦</span>
+            <span className="font-pixel text-pink-400/70 text-sm md:text-base tracking-widest">◆◆◆</span>
+          </div>
+
+          {/* Main title */}
+          <h1
+            className="font-arcade text-3xl md:text-6xl animate-neon"
+            style={{ color: '#ff79c6' }}
+          >
+            ARCADE ZONE
+          </h1>
+
+          {/* Subtitle */}
+          <div className="mt-1 md:mt-2 flex items-center justify-center gap-2 md:gap-3">
+            <span className="font-pixel text-purple-400/60 text-[10px] md:text-xs tracking-[0.25em]">───</span>
+            <span className="font-pixel text-purple-300/70 text-[10px] md:text-xs tracking-[0.3em]">EST. 1985</span>
+            <span className="font-pixel text-purple-400/60 text-[10px] md:text-xs tracking-[0.25em]">───</span>
+          </div>
+        </div>
       </div>
 
       {/* Navigation Buttons (Desktop) */}

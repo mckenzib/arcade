@@ -209,16 +209,51 @@ export const ArcadeCabinet: React.FC<ArcadeCabinetProps> = ({
       {/* Cabinet Chassis - Hidden when Expanded */}
       <div className={`
         ${isExpanded ? 'hidden' : 'block'}
-        absolute inset-0 rounded-t-2xl bg-zinc-900 border-4 ${currentTheme.border} z-0
+        absolute inset-0 rounded-t-2xl border-4 ${currentTheme.border} z-0
         ${isSelected && !isGameRunning && !isLoading ? currentTheme.glow : ''}
         transition-shadow duration-300
-      `}></div>
+      `} style={{
+        background: 'linear-gradient(160deg, #2a2a2e 0%, #1c1c20 40%, #141416 100%)',
+        boxShadow: isSelected && !isGameRunning && !isLoading
+          ? undefined
+          : 'inset 2px 0 8px rgba(0,0,0,0.6), inset -1px 0 4px rgba(255,255,255,0.03)'
+      }}></div>
+
+      {/* 3D Side Depth Panel - Hidden when Expanded */}
+      {!isExpanded && (
+        <div className="absolute top-3 bottom-3 -right-3 w-3 z-0 rounded-r-sm" style={{
+          background: 'linear-gradient(to right, #0a0a0b, #111114)',
+          borderTop: '2px solid #222',
+          borderRight: '2px solid #111',
+          borderBottom: '2px solid #111',
+        }}></div>
+      )}
+
+      {/* Cabinet Body Highlight Strip - Hidden when Expanded */}
+      {!isExpanded && (
+        <div className="absolute top-8 bottom-28 md:bottom-32 left-2 w-[2px] z-1 opacity-20 rounded-full" style={{
+          background: 'linear-gradient(to bottom, rgba(255,255,255,0.4), rgba(255,255,255,0.05) 60%, transparent)'
+        }}></div>
+      )}
 
       {/* Marquee / Top Header - Hidden when Expanded */}
-      <div className={`${isExpanded ? 'hidden' : 'flex'} z-10 h-20 md:h-24 ${currentTheme.bg} rounded-t-xl border-b-4 ${currentTheme.border} items-center justify-center relative overflow-hidden shrink-0 mx-auto mt-1 w-[calc(100%-8px)] shrink-0`}>
-        <div className="absolute inset-0 bg-black/20 z-10"></div>
-        <div className={`absolute inset-0 opacity-30 bg-[repeating-linear-gradient(45deg,transparent,transparent_10px,${accentColor}_10px,${accentColor}_20px)]`}></div>
-        <h2 className={`font-arcade text-lg md:text-2xl text-center px-2 leading-tight text-white z-20 drop-shadow-md ${isHovered && isSelected && !isGameRunning && 'animate-pulse'}`}>
+      <div className={`${isExpanded ? 'hidden' : 'flex'} z-10 h-20 md:h-24 rounded-t-xl border-b-4 ${currentTheme.border} items-center justify-center relative overflow-hidden shrink-0 mx-auto mt-1 w-[calc(100%-8px)]`}
+        style={{ background: `linear-gradient(180deg, ${accentColor}33 0%, ${accentColor}11 60%, #000 100%)` }}>
+        {/* Diagonal stripe overlay */}
+        <div className="absolute inset-0 opacity-20" style={{
+          backgroundImage: `repeating-linear-gradient(45deg, transparent, transparent 8px, ${accentColor} 8px, ${accentColor} 10px)`
+        }}></div>
+        {/* Top edge LED strip */}
+        <div className="absolute top-0 left-0 right-0 h-1 opacity-60" style={{ background: accentColor, boxShadow: `0 0 8px ${accentColor}` }}></div>
+        {/* Bottom edge accent */}
+        <div className="absolute bottom-0 left-4 right-4 h-px opacity-30" style={{ background: accentColor }}></div>
+        {/* Dark vignette */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/50 z-10"></div>
+        <h2 className={`font-arcade text-lg md:text-2xl text-center px-2 leading-tight z-20 ${isHovered && isSelected && !isGameRunning && 'animate-pulse'}`}
+          style={{
+            color: '#fff',
+            textShadow: `0 0 8px ${accentColor}, 0 0 20px ${accentColor}, 0 0 2px #fff`
+          }}>
           {title}
         </h2>
       </div>
@@ -227,7 +262,11 @@ export const ArcadeCabinet: React.FC<ArcadeCabinetProps> = ({
       <div className={`relative z-10 flex flex-col items-center justify-center min-h-0 transition-all duration-500 ${isExpanded ? 'w-full h-full p-0' : 'w-full flex-1 p-3 md:p-4'}`}>
           
           {/* Screen Bezel - Hidden borders when expanded */}
-          <div className={`w-full h-full bg-zinc-800 rounded-lg relative shadow-inner inset-shadow-black flex flex-col ${isExpanded ? 'rounded-none p-0 bg-black' : 'p-2'}`}>
+          <div className={`w-full h-full rounded-lg relative flex flex-col ${isExpanded ? 'rounded-none p-0 bg-black' : 'p-2'}`}
+            style={isExpanded ? {} : {
+              background: 'linear-gradient(145deg, #3a3a3f 0%, #252528 50%, #1a1a1d 100%)',
+              boxShadow: 'inset 0 2px 4px rgba(255,255,255,0.06), inset 0 -2px 4px rgba(0,0,0,0.8), inset 2px 0 4px rgba(255,255,255,0.03)'
+            }}>
               
               {/* Actual Screen Container */}
               <div 
@@ -312,50 +351,105 @@ export const ArcadeCabinet: React.FC<ArcadeCabinetProps> = ({
       </div>
 
       {/* Control Panel - Hidden when expanded */}
-      <div className={`${isExpanded ? 'hidden' : 'flex'} z-10 h-28 md:h-32 w-full bg-zinc-800 border-t-4 border-zinc-700 relative skew-x-1 -ml-[1px] w-[calc(100%+2px)] items-center justify-center shadow-lg shrink-0 mx-auto`}>
-         {/* Joystick */}
-         <div className="absolute left-6 md:left-8 top-1/3">
-            <div className="w-3 md:w-4 h-10 md:h-12 bg-zinc-500 mx-auto rounded-full shadow-lg relative -top-4"></div>
-            <div className="w-6 h-6 md:w-8 md:h-8 bg-red-600 rounded-full shadow-md absolute -top-6 md:-top-8 left-1/2 -translate-x-1/2 border-b-4 border-red-800"></div>
-            <div className="w-10 h-10 md:w-12 md:h-12 bg-black/50 rounded-full absolute bottom-0 left-1/2 -translate-x-1/2 blur-sm"></div>
-         </div>
+      {!isExpanded && (
+      <div className="z-10 h-28 md:h-32 w-full relative shrink-0 mx-auto overflow-hidden"
+        style={{
+          clipPath: 'polygon(0% 0%, 100% 0%, 96% 100%, 4% 100%)',
+          background: 'linear-gradient(180deg, #323236 0%, #252528 60%, #1e1e21 100%)',
+          borderTop: '3px solid #444',
+          boxShadow: 'inset 0 2px 6px rgba(255,255,255,0.05), inset 0 -4px 8px rgba(0,0,0,0.6)'
+        }}>
 
-         {/* Buttons */}
-         <div className="absolute right-6 md:right-8 top-1/3 flex gap-2 md:gap-3">
-            <div className={`w-6 h-6 md:w-8 md:h-8 rounded-full shadow-[0_4px_0_rgba(0,0,0,0.5)] border-b-4 border-black active:border-b-0 active:translate-y-1 transition-all ${color === 'cyan' ? 'bg-cyan-500' : color === 'purple' ? 'bg-purple-500' : color === 'red' ? 'bg-blue-500' : color === 'green' ? 'bg-lime-500' : color === 'yellow' ? 'bg-blue-500' : color === 'blue' ? 'bg-indigo-500' : 'bg-yellow-500'}`}></div>
-            <div className={`w-6 h-6 md:w-8 md:h-8 rounded-full shadow-[0_4px_0_rgba(0,0,0,0.5)] border-b-4 border-black active:border-b-0 active:translate-y-1 transition-all mt-3 md:mt-4 ${color === 'cyan' ? 'bg-pink-500' : color === 'purple' ? 'bg-green-500' : color === 'red' ? 'bg-yellow-500' : color === 'green' ? 'bg-emerald-600' : color === 'yellow' ? 'bg-red-500' : color === 'blue' ? 'bg-red-600' : 'bg-red-500'}`}></div>
-         </div>
-         
-         {/* Start Buttons */}
-         <div className="absolute bottom-2 w-full flex justify-center gap-4">
-            <div className="flex flex-col items-center">
-                <div className="w-5 h-3 md:w-6 md:h-4 bg-white opacity-80"></div>
-                <span className="text-[6px] md:text-[8px] font-pixel mt-1 text-zinc-400">1P</span>
+        {/* Panel surface texture lines */}
+        <div className="absolute inset-0 opacity-10" style={{
+          backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 11px, rgba(255,255,255,0.15) 12px)'
+        }}></div>
+
+        {/* Joystick */}
+        <div className="absolute left-5 md:left-7 top-3 md:top-4">
+          {/* Base plate */}
+          <div className="w-12 md:w-14 h-12 md:h-14 bg-zinc-900 rounded-full border-2 border-zinc-700 flex items-center justify-center shadow-[inset_0_2px_6px_rgba(0,0,0,0.8)]">
+            {/* Stick shaft */}
+            <div className="relative flex flex-col items-center">
+              <div className="w-2 md:w-2.5 h-7 md:h-8 bg-gradient-to-b from-zinc-400 to-zinc-600 rounded-full shadow-md"></div>
+              {/* Ball top */}
+              <div className="absolute -top-3 md:-top-3.5 w-5 h-5 md:w-6 md:h-6 bg-gradient-to-br from-red-400 to-red-700 rounded-full shadow-lg border border-red-900"
+                style={{ boxShadow: '0 2px 4px rgba(0,0,0,0.6), inset 0 1px 2px rgba(255,255,255,0.3)' }}></div>
             </div>
-            <div className="flex flex-col items-center">
-                <div className="w-5 h-3 md:w-6 md:h-4 bg-white opacity-80"></div>
-                <span className="text-[6px] md:text-[8px] font-pixel mt-1 text-zinc-400">2P</span>
-            </div>
-         </div>
+          </div>
+        </div>
+
+        {/* Action Buttons (triangle layout) */}
+        <div className="absolute right-4 md:right-6 top-2 md:top-3">
+          {/* Top button */}
+          <div className="flex justify-center mb-1">
+            <div className={`w-7 h-7 md:w-8 md:h-8 rounded-full border-b-[3px] border-black shadow-lg transition-all
+              ${color === 'cyan' ? 'bg-cyan-500' : color === 'purple' ? 'bg-purple-500' : color === 'red' ? 'bg-blue-500' : color === 'green' ? 'bg-lime-500' : color === 'yellow' ? 'bg-blue-500' : color === 'blue' ? 'bg-indigo-500' : 'bg-yellow-500'}`}
+              style={{ boxShadow: '0 3px 0 rgba(0,0,0,0.5), inset 0 1px 2px rgba(255,255,255,0.3)' }}></div>
+          </div>
+          {/* Bottom two buttons */}
+          <div className="flex gap-2 md:gap-2.5">
+            <div className={`w-7 h-7 md:w-8 md:h-8 rounded-full border-b-[3px] border-black shadow-lg transition-all
+              ${color === 'cyan' ? 'bg-pink-500' : color === 'purple' ? 'bg-green-500' : color === 'red' ? 'bg-yellow-500' : color === 'green' ? 'bg-emerald-600' : color === 'yellow' ? 'bg-red-500' : color === 'blue' ? 'bg-red-600' : 'bg-red-500'}`}
+              style={{ boxShadow: '0 3px 0 rgba(0,0,0,0.5), inset 0 1px 2px rgba(255,255,255,0.3)' }}></div>
+            <div className="w-7 h-7 md:w-8 md:h-8 rounded-full border-b-[3px] border-black shadow-lg bg-yellow-400"
+              style={{ boxShadow: '0 3px 0 rgba(0,0,0,0.5), inset 0 1px 2px rgba(255,255,255,0.3)' }}></div>
+          </div>
+        </div>
+
+        {/* Start Buttons */}
+        <div className="absolute bottom-2 w-full flex justify-center gap-5 md:gap-6">
+          <div className="flex flex-col items-center gap-0.5">
+            <div className="w-8 h-3 md:w-9 md:h-3 bg-zinc-300 rounded-sm opacity-85 border border-zinc-400"
+              style={{ boxShadow: '0 2px 0 rgba(0,0,0,0.5)' }}></div>
+            <span className="text-[6px] md:text-[7px] font-pixel text-zinc-400 tracking-widest">1P</span>
+          </div>
+          <div className="flex flex-col items-center gap-0.5">
+            <div className="w-8 h-3 md:w-9 md:h-3 bg-zinc-300 rounded-sm opacity-85 border border-zinc-400"
+              style={{ boxShadow: '0 2px 0 rgba(0,0,0,0.5)' }}></div>
+            <span className="text-[6px] md:text-[7px] font-pixel text-zinc-400 tracking-widest">2P</span>
+          </div>
+        </div>
       </div>
+      )}
       
       {/* Coin Slot Area - Hidden when expanded */}
-      <div className={`${isExpanded ? 'hidden' : 'flex'} z-10 h-20 md:h-24 w-[calc(100%-8px)] mx-auto bg-black rounded-b-xl items-center justify-center gap-8 border-t border-zinc-700 shrink-0 border-x-4 border-b-4 ${currentTheme.border}`}>
-          <div className="flex flex-col items-center">
-             <div className="w-8 h-10 md:w-10 md:h-14 bg-zinc-800 border-2 border-zinc-600 flex items-center justify-center mb-1">
-               <div className="w-1 h-6 md:h-8 bg-black"></div>
-             </div>
-             <div className={`w-2 h-2 ${currentTheme.bg} animate-pulse`}></div>
+      {!isExpanded && (
+      <div className={`z-10 h-16 md:h-20 w-[calc(100%-8px)] mx-auto rounded-b-xl items-center justify-center shrink-0 border-x-4 border-b-4 ${currentTheme.border} flex`}
+        style={{ background: 'linear-gradient(180deg, #111113 0%, #0a0a0c 100%)' }}>
+        {/* Coin slots row */}
+        <div className="flex items-center justify-center gap-6 md:gap-8">
+          {/* Slot 1 */}
+          <div className="flex flex-col items-center gap-1">
+            <div className="w-9 h-10 md:w-11 md:h-12 bg-zinc-900 border border-zinc-700 rounded-sm flex items-center justify-center"
+              style={{ boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.8)' }}>
+              <div className="w-5 h-1 bg-zinc-600 rounded-sm"></div>
+            </div>
+            <div className={`w-1.5 h-1.5 rounded-full animate-pulse ${currentTheme.bg}`}></div>
           </div>
-          <div className="flex flex-col items-center">
-             <div className="w-8 h-10 md:w-10 md:h-14 bg-zinc-800 border-2 border-zinc-600 flex items-center justify-center mb-1">
-               <div className="w-1 h-6 md:h-8 bg-black"></div>
-             </div>
+          {/* Center label */}
+          <div className="font-pixel text-zinc-600 text-[7px] text-center leading-tight tracking-widest">INSERT<br/>COIN</div>
+          {/* Slot 2 */}
+          <div className="flex flex-col items-center gap-1">
+            <div className="w-9 h-10 md:w-11 md:h-12 bg-zinc-900 border border-zinc-700 rounded-sm flex items-center justify-center"
+              style={{ boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.8)' }}>
+              <div className="w-5 h-1 bg-zinc-600 rounded-sm"></div>
+            </div>
+            <div className="w-1.5 h-1.5 rounded-full bg-zinc-700"></div>
           </div>
+        </div>
       </div>
+      )}
 
-      {/* Side Glow Reflection on Floor - Hidden when expanded */}
-      <div className={`${isExpanded ? 'hidden' : 'block'} absolute -bottom-10 left-1/2 -translate-x-1/2 w-3/4 h-10 ${currentTheme.bg} blur-xl opacity-40 rounded-full`}></div>
+      {/* Floor Glow Reflection - Hidden when expanded */}
+      {!isExpanded && (
+        <>
+          <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 w-4/5 h-8 blur-xl opacity-50 rounded-full"
+            style={{ background: accentColor }}></div>
+          <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-1/2 h-4 blur-md opacity-30 rounded-full"
+            style={{ background: accentColor }}></div>
+        </>
+      )}
     </div>
   );
 }
