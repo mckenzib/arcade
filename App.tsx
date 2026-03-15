@@ -168,6 +168,15 @@ export default function App() {
         background: 'radial-gradient(ellipse at 50% 50%, rgba(120,50,200,0.12) 0%, transparent 70%)',
       }}></div>
 
+      {/* Back Button - always visible, top left */}
+      <a
+        href="/"
+        className={`fixed top-4 left-4 z-[70] flex items-center gap-2 text-pink-400 hover:text-pink-300 transition-all font-pixel text-sm group ${isExpanded ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
+      >
+        <ArrowLeftCircle className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
+        BACK
+      </a>
+
       {/* Top Banner - Visible only when expanded */}
       <div 
         className={`fixed top-0 left-0 right-0 z-[60] h-16 bg-zinc-900/90 border-b-2 border-pink-500 flex items-center justify-between px-4 md:px-8 transition-transform duration-300 ${isExpanded ? 'translate-y-0' : '-translate-y-full'}`}
