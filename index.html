@@ -71,6 +71,50 @@
       .animate-flicker {
         animation: flicker 0.15s infinite;
       }
+
+      /* Neon Sign Pulse */
+      @keyframes neon-pulse {
+        0%, 100% {
+          text-shadow: 0 0 7px #fff, 0 0 14px #fff, 0 0 28px #ff79c6, 0 0 56px #ff79c6, 0 0 84px #bd10e0;
+          opacity: 1;
+        }
+        45% {
+          text-shadow: 0 0 4px #fff, 0 0 10px #ff79c6, 0 0 20px #ff79c6, 0 0 40px #bd10e0;
+          opacity: 0.95;
+        }
+        50% {
+          text-shadow: 0 0 2px #fff, 0 0 6px #ff79c6, 0 0 10px #bd10e0;
+          opacity: 0.88;
+        }
+        55% {
+          text-shadow: 0 0 4px #fff, 0 0 10px #ff79c6, 0 0 20px #ff79c6, 0 0 40px #bd10e0;
+          opacity: 0.95;
+        }
+        75% {
+          text-shadow: 0 0 7px #fff, 0 0 14px #fff, 0 0 28px #ff79c6, 0 0 56px #ff79c6, 0 0 84px #bd10e0;
+          opacity: 1;
+        }
+        80% {
+          text-shadow: 0 0 2px #fff, 0 0 6px #ff79c6, 0 0 10px #bd10e0;
+          opacity: 0.85;
+        }
+        82% {
+          text-shadow: 0 0 7px #fff, 0 0 14px #fff, 0 0 28px #ff79c6, 0 0 56px #ff79c6, 0 0 84px #bd10e0;
+          opacity: 1;
+        }
+      }
+      .animate-neon {
+        animation: neon-pulse 4s ease-in-out infinite;
+      }
+
+      /* Sign border glow */
+      @keyframes sign-glow {
+        0%, 100% { box-shadow: 0 0 8px rgba(236,72,153,0.4), inset 0 0 8px rgba(236,72,153,0.1); }
+        50% { box-shadow: 0 0 20px rgba(236,72,153,0.6), inset 0 0 12px rgba(236,72,153,0.15); }
+      }
+      .animate-sign-glow {
+        animation: sign-glow 3s ease-in-out infinite;
+      }
       
       .font-arcade {
         font-family: 'Press Start 2P', cursive;
@@ -91,7 +135,7 @@
   }
 }
 </script>
-  <script type="module" crossorigin src="/assets/index-BO78fFdd.js"></script>
+  <script type="module" crossorigin src="/assets/index-CH9cUzf5.js"></script>
 </head>
   <body>
     <div id="root"></div>
